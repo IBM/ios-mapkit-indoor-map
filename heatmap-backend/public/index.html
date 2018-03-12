@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Main Page</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  </head>
+  <body>
+    <div id="header">
+      <div id="title">
+          <h1>Endpoints</h1>
+        </div>
+        <div id="subtitle">
+          <a href="/">APIs</a> <a href="/main">Stored Events</a>
+        </div>
+    </div>
+    <div id="main">
+      <h2>GET</h2>
+      <ul>
+        <li>/beacons</li>
+        <li>/booths</li>
+        <li>/events</li>
+        <li>/beacons/:beaconId</li>
+        <li>/booths/:boothId</li>
+        <li>/events/:eventId</li>
+        <li>/svg/:eventId</li>
+        <li>/svg/<:eventId>.pdf</li>
+      </ul>
+      <h2>POST</h2>
+      <ul>
+        <li>/beacons/add</li>
+        <li>/booths/add</li>
+        <li>/events/add</li>
+      </ul>
+    </div>
+  </body>
+</html>

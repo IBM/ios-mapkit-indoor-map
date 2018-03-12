@@ -1,0 +1,20 @@
+{
+  "name": "heat-map",
+  "main": "app.js",
+  "description": "heat-map",
+  "version": "1.0.0",
+  "private": false,
+  "engines": {
+    "node": "6.*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM/ios-mapkit-heat-map"
+  },
+  "dependencies": {
+    "prompt": "^1.0.0",
+    "request": "^2.83.0"
+  },
+  "author": "Anthony Amanse",
+  "license": "Apache-2.0"
+}

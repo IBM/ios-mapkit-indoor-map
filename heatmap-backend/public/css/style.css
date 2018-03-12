@@ -1,0 +1,43 @@
+#header {
+  display: flex;
+  justify-content: center;
+  height: 150px;
+  background-color: #68fce6;
+  font-family: 'Open Sans';
+  color: #000 ;
+  align-items: center;
+  flex-direction: column;
+}
+
+#main svg {
+  padding-top: 100px;
+  display: block;
+  margin: auto;
+}
+
+#main svg text {
+  font-size: 14pt;
+  font-family: 'Open Sans';
+}
+
+#main {
+  padding-top: 50px;
+  display: block;
+  font-family: 'Open Sans';
+  text-align: center;
+  margin: auto;
+}
+
+#main ul {
+  font-size: 12pt;
+  display: inline;
+  align-items: center;
+}
+
+#main li {
+  margin-top: 12pt;
+}
+
+#main h2 {
+  margin-bottom: -25px;
+}

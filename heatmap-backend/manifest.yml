@@ -1,0 +1,7 @@
+---
+applications:
+- name: heatmap-backend
+  random-route: true
+  memory:  128M
+  services:
+    - heatmap-compose-mongodb

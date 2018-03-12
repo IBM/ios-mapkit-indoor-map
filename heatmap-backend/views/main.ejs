@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Map</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  </head>
+  <body>
+    <div id="header">
+      <div id="title">
+        <h1><%= name %></h1>
+      </div>
+      <div id="subtitle">
+        <a href="/">APIs</a> <a href="/main">Stored Events</a>
+      </div>
+      
+    </div>
+    <div id="main">
+      <% if (svg) { %>
+        <%- svg %>
+      <% } else if (list) %>
+      <ul>
+        <% list.forEach(function(event) { %>
+          <li><a href="/main/<%= event.eventId %>"><%= event._doc.eventName %></a></li>
+        <% }); %>
+      </ul>
+    </div>
+  </body>
+</html>
