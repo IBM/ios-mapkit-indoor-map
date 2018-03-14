@@ -1,4 +1,4 @@
-# iOS Indoor Map View
+# Create an Indoor Map with an iOS app
 In this Code Pattern, we will create an indoor map using Apple's MapKit framework and a Cloud Foundry app for the iOS app's backend. The iOS app will use the existing framework MapKit to display the map while the Cloud Foundry app will generate a PDF file of an indoor map which is consumed by the iOS app. With the use of a backend data that is separate from the iOS app, developers would not need to keep updating their iOS app if they want to modify their indoor map's floor plan. This app extends the sample code in [Footprint: Indoor positioning](https://developer.apple.com/library/content/samplecode/footprint/Listings/Swift_README_md.html) from Apple.
 
 When the reader has completed this Code Pattern, they will understand how to:

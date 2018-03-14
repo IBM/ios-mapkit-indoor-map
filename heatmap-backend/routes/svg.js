@@ -16,7 +16,7 @@ router.get("/:eventId", function(req, res) {
       // Get SVG Content
       let SVGContent = svgContent(event.map,1);
       let svg = svgTemplate(event.x,event.y,SVGContent,1);
-      
+
       // If .pdf is present, send a pdf version of the svg
       if (req.params.eventId.split(".").pop() == "pdf") {
 
@@ -30,7 +30,7 @@ router.get("/:eventId", function(req, res) {
         let pdfY = pdfPointRatio * event.y * 1;
 
         // Start making PDF
-        let doc = new PDFDocument({ size: [pdfX,pdfY]}); // Fixed to 1000 for now.
+        let doc = new PDFDocument({ size: [pdfX,pdfY]});
         let echoStream = new stream.Writable();
         let pdfBuffer = new Buffer("");
 
@@ -41,7 +41,7 @@ router.get("/:eventId", function(req, res) {
         };
 
         // Use svg-to-pdfkit
-        SVGtoPDF(doc, svg, 0, 0);
+        SVGtoPDF(doc, svg, 0, 0, { fontCallback: () => 'Helvetica' });
         doc.pipe(echoStream);
         doc.end();
 
@@ -56,7 +56,7 @@ router.get("/:eventId", function(req, res) {
           bufferStream.pipe(res);
         });
       } else {
-        
+
         // Send SVG
         res.send(svg);
       }
@@ -75,7 +75,8 @@ router.get("/:eventId", function(req, res) {
  * @return {String} an SVG in xml format
  */
 function svgTemplate(width, height, content, scale) {
-  let svg = "<svg width='" + width*scale + "' height='" + height*scale + "'>" +
+  let border = "<rect fill='none' x='0' y ='0' width='" + width*scale + "' height= '" + height*scale + "' stroke='#999999' />";
+  let svg = "<svg width='" + width*scale + "' height='" + height*scale + "'>" + border +
     content + "</svg>";
   return svg;
 }
@@ -121,13 +122,27 @@ function rectangleTemplate(booth, scale) {
   elem.height *= scale;
   const xCentroid = (elem.width/2)+elem.x;
   const yCentroid = (elem.height/2)+elem.y;
+  let boothTextLines = booth.unit.split(' ');
 
   let svg = "<rect x='" + elem.x + "' y='" + elem.y + "' width='" +
-    elem.width + "' height='" + elem.height + "' fill='#CCB3B3' />";
+    elem.width + "' height='" + elem.height + "' fill='#DEDEDE' stroke='#999999' />";
+  let tspans = "";
+  boothTextLines.forEach(function(value, index) {
+    let dy = '1.2em';
+    if (index == 0 && boothTextLines.length == 3) {
+      dy = '-1.2em';
+    } else if (index == 0 && boothTextLines.length == 2) {
+      dy = '-0.6em';
+    } else if (index == 0 && boothTextLines.length == 1) {
+      dy = '0';
+    }
+    tspans += "<tspan dy='" + dy + "' x='" + xCentroid + "' alignment-baseline='middle' text-anchor='middle'>" + value + "</tspan>";
+  });
+
   svg += "<text x='" + xCentroid + "' y='" +
-    yCentroid + "' transform='rotate(-45 " + xCentroid + "," + yCentroid + ")' alignment-baseline='middle' text-anchor='middle'\
-    fill='blue' font-size='0.75vw' font-family='sans-serif'>" +
-    booth.unit + "</text>";
+    yCentroid + "'\
+    fill='black' font-size='20pt' font-family='sans-serif'>" +
+    tspans + "</text>";
   return svg;
 }
 
@@ -146,10 +161,10 @@ function circleTemplate(booth, scale) {
   elem.radius *= scale;
 
   let svg = "<circle cx='" + elem.cx + "' cy='" + elem.cy + "' r='" +
-    elem.radius + "' fill='#CCB3B3' />";
+    elem.radius + "' fill='#DEDEDE' stroke='#999999' />";
   svg += "<text x='" + elem.cx + "' y='" +
-    elem.cy + "' transform='rotate(-45 " + elem.cx + "," + elem.cy + ")' alignment-baseline='middle' text-anchor='middle'\
-    fill='blue' font-size='0.75vw' font-family='sans-serif'>" +
+    elem.cy + "' alignment-baseline='middle' text-anchor='middle'\
+    fill='black' font-size='0.75vw' font-family='sans-serif'>" +
     booth.unit + "</text>";
   return svg;
 }
@@ -171,10 +186,10 @@ function ellipseTemplate(booth, scale) {
   elem.ry *= scale;
 
   let svg = "<ellipse cx='" + elem.cx + "' cy='" + elem.cy + "' rx='" +
-    elem.rx + "' ry='" + elem.ry + "' fill='#CCB3B3' />";
+    elem.rx + "' ry='" + elem.ry + "' fill='#DEDEDE' stroke='#999999' />";
   svg += "<text x='" + elem.cx + "' y='" +
-    elem.cy + "' transform='rotate(-45 " + elem.cx + "," + elem.cy + ")' alignment-baseline='middle' text-anchor='middle'\
-    fill='blue' font-size='0.75vw' font-family='sans-serif'>" +
+    elem.cy + "' alignment-baseline='middle' text-anchor='middle'\
+    fill='black' font-size='0.75vw' font-family='sans-serif'>" +
     booth.unit + "</text>";
   return svg;
 }
@@ -205,10 +220,10 @@ function polygonTemplate(booth, scale) {
 
   const xCentroid = xPoints.reduce((a,b) => (a+b)) / xPoints.length;
   const yCentroid = yPoints.reduce((a,b) => (a+b)) / yPoints.length;
-  let svg = "<polygon points='" + scaledInt + "' fill='#CCB3B3' />";
+  let svg = "<polygon points='" + scaledInt + "' fill='#DEDEDE' stroke='#999999' />";
   svg += "<text x='" + xCentroid + "' y='" +
     yCentroid + "' alignment-baseline='middle' text-anchor='middle'\
-    fill='blue' font-size='0.75vw' font-family='sans-serif'>" +
+    fill='black' font-size='0.75vw' font-family='sans-serif'>" +
     booth.unit + "</text>";
   return svg;
 }
